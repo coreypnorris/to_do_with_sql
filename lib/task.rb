@@ -15,10 +15,6 @@ class Task
     @list_id
   end
 
-  def save
-    DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{@name}, #{@list_id});")
-  end
-
   def self.all
     results = DB.exec("SELECT * FROM tasks;")
     tasks = []
@@ -30,8 +26,12 @@ class Task
     tasks
   end
 
+  def save
+    DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{@name}', #{@list_id});")
+  end
+
   def ==(another_task)
-    self.name == another_task.name
+    self.name == another_task.name && self.list_id == another_task.list_id
   end
 
 end

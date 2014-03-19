@@ -1,13 +1,4 @@
-require 'list'
-require 'pg'
-
-DB = PG.connect(:dbname => 'to_do_test')
-
-RSpec.configure do |config|
-  config.after(:each) do
-    DB.exec("DELETE FROM lists *;")
-  end
-end
+require 'spec_helper'
 
 describe List do
   it 'is initialized with a name' do
@@ -35,4 +26,11 @@ describe List do
     test_list.save
     List.all.should eq [test_list]
   end
+
+  it 'sets its ID when you save it' do
+    list = List.new('Epicodus stuff')
+    list.save
+    list.id.should be_an_instance_of Fixnum
+  end
+
 end
